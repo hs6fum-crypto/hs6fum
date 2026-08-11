@@ -1,0 +1,1720 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard แผนเงินบำรุง ปีงบประมาณ 2570</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f2fff6;
+      --surface: #ffffff;
+      --surface-soft: #eafff1;
+      --ink: #092316;
+      --muted: #4f6f5d;
+      --line: #cfeede;
+      --line-soft: #e5f7ec;
+      --primary: #22c55e;
+      --primary-strong: #15803d;
+      --primary-soft: #dcfce7;
+      --accent: #84cc16;
+      --accent-soft: #f0fddb;
+      --violet: #14b8a6;
+      --violet-soft: #e1fbf7;
+      --rose: #65a30d;
+      --rose-soft: #effdd5;
+      --warn: #eab308;
+      --warn-soft: #fef9c3;
+      --danger: #f97316;
+      --danger-soft: #ffedd5;
+      --good: #10b981;
+      --good-soft: #d1fae5;
+      --shadow: 0 12px 28px rgba(20, 83, 45, 0.1);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(34, 197, 94, 0.24), transparent 280px),
+        radial-gradient(circle at 88% 8%, rgba(132, 204, 22, 0.22), transparent 320px),
+        radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.16), transparent 340px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(242, 255, 246, 0) 380px),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans Thai", "Sarabun", Tahoma, Arial, sans-serif;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--primary-strong);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.2;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      min-width: min(100%, 360px);
+    }
+
+    .button,
+    .link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 14px;
+      background: var(--surface);
+      color: var(--ink);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .button:hover,
+    .link-button:hover {
+      border-color: var(--primary);
+      background: var(--surface-soft);
+    }
+
+    .button:active,
+    .link-button:active {
+      transform: translateY(1px);
+    }
+
+    .button.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #052e16;
+    }
+
+    .button.primary:hover {
+      background: var(--primary-strong);
+      color: #ffffff;
+    }
+
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .switch input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .status-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(34, 197, 94, 0.34);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--primary-strong);
+      font-weight: 700;
+      min-width: 0;
+    }
+
+    .status-line > span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    #load-state,
+    #last-updated {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.22);
+    }
+
+    .dot.warn {
+      background: var(--warn);
+      box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.24);
+    }
+
+    .dot.danger {
+      background: var(--danger);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .metric {
+      position: relative;
+      min-height: 132px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .metric::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--accent);
+    }
+
+    .metric::after {
+      content: "";
+      position: absolute;
+      right: -34px;
+      top: -42px;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: rgba(132, 204, 22, 0.16);
+    }
+
+    .metric-plan::before {
+      background: var(--accent);
+    }
+
+    .metric-spent::before {
+      background: var(--rose);
+    }
+
+    .metric-remaining::before {
+      background: var(--good);
+    }
+
+    .metric-rate::before {
+      background: var(--violet);
+    }
+
+    .metric-status::before {
+      background: var(--warn);
+    }
+
+    .metric-plan::after {
+      background: rgba(132, 204, 22, 0.16);
+    }
+
+    .metric-spent::after {
+      background: rgba(101, 163, 13, 0.15);
+    }
+
+    .metric-remaining::after {
+      background: rgba(16, 185, 129, 0.17);
+    }
+
+    .metric-rate::after {
+      background: rgba(20, 184, 166, 0.17);
+    }
+
+    .metric-status::after {
+      background: rgba(234, 179, 8, 0.16);
+    }
+
+    .metric-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metric-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .metric-token {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      min-width: 34px;
+      height: 28px;
+      border-radius: 999px;
+      padding: 0 8px;
+      background: var(--accent-soft);
+      color: #365314;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .metric-spent .metric-token {
+      background: var(--rose-soft);
+      color: #3f6212;
+    }
+
+    .metric-remaining .metric-token {
+      background: var(--good-soft);
+      color: #047857;
+    }
+
+    .metric-rate .metric-token {
+      background: var(--violet-soft);
+      color: #0f766e;
+    }
+
+    .metric-status .metric-token {
+      background: var(--warn-soft);
+      color: #713f12;
+    }
+
+    .metric-value {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(1.55rem, 2.7vw, 2.15rem);
+      line-height: 1.1;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-note {
+      position: relative;
+      z-index: 1;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.92fr) minmax(420px, 1.6fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.35;
+    }
+
+    .panel-note {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-size: 0.84rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge.warn {
+      background: var(--warn-soft);
+      color: #713f12;
+    }
+
+    .badge.danger {
+      background: var(--danger-soft);
+      color: #9a3412;
+    }
+
+    .progress-wrap {
+      display: grid;
+      place-items: center;
+      padding: 4px 0 10px;
+    }
+
+    .donut {
+      width: min(260px, 100%);
+      aspect-ratio: 1;
+    }
+
+    .donut text {
+      fill: var(--ink);
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    .donut .label {
+      fill: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .donut .value {
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .summary-stack {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .summary-row strong {
+      color: var(--ink);
+      font-weight: 800;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .chart {
+      width: 100%;
+      min-height: 290px;
+      overflow: hidden;
+    }
+
+    .chart svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .axis,
+    .grid-line {
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+
+    .chart-label {
+      fill: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .chart-value {
+      fill: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .quarter-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quarter-mini {
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      background: #fbfffd;
+    }
+
+    .quarter-mini span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .quarter-mini strong {
+      display: block;
+      margin-top: 3px;
+      color: var(--ink);
+      font-size: 1.02rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+
+    .category-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .category-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.15fr) minmax(210px, 1.1fr);
+      gap: 16px;
+      align-items: center;
+      border: 1px solid var(--line-soft);
+      border-left: 5px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #fdfffd;
+    }
+
+    .category-row.good {
+      border-left-color: var(--good);
+    }
+
+    .category-row.warn {
+      border-left-color: var(--warn);
+    }
+
+    .category-row.danger {
+      border-left-color: var(--danger);
+    }
+
+    .category-name {
+      min-width: 0;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .category-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: var(--danger-soft);
+      color: #9a3412;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .category-row.warn .category-status {
+      background: var(--warn-soft);
+      color: #713f12;
+    }
+
+    .category-row.good .category-status {
+      background: var(--good-soft);
+      color: #047857;
+    }
+
+    .category-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 13px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e6f6ec;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--primary);
+      transform-origin: left center;
+      transition: width 0.25s ease;
+    }
+
+    .bar-fill.warn {
+      background: var(--warn);
+    }
+
+    .bar-fill.danger {
+      background: var(--danger);
+    }
+
+    .category-percent {
+      text-align: left;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .category-percent span {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .category-money-grid {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .category-money {
+      min-width: 0;
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      background: #f8fff9;
+    }
+
+    .category-money span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .category-money strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--ink);
+      font-size: 0.96rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-panel {
+      margin-top: 18px;
+    }
+
+    .table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .search {
+      width: min(420px, 100%);
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .search:focus {
+      outline: 3px solid rgba(34, 197, 94, 0.2);
+      border-color: var(--primary);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      min-width: 1040px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f0fff4;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    td {
+      font-size: 0.92rem;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .item-cell {
+      max-width: 360px;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      font-weight: 700;
+    }
+
+    .subitem .item-cell {
+      padding-left: 26px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .total-row td {
+      background: var(--surface-soft);
+      font-weight: 800;
+    }
+
+    .mobile-detail-list {
+      display: none;
+      gap: 12px;
+    }
+
+    .detail-card {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: #fdfffd;
+    }
+
+    .detail-card.subitem {
+      border-left-color: var(--muted);
+      background: #fbfffd;
+    }
+
+    .detail-card.total-row {
+      border-left-color: var(--primary);
+      background: var(--surface-soft);
+    }
+
+    .detail-card-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-card-index {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .detail-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .detail-card-field {
+      min-width: 0;
+      border-radius: 8px;
+      padding: 8px;
+      background: #f8fff9;
+    }
+
+    .detail-card-field span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .detail-card-field strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--ink);
+      font-size: 0.96rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-align: center;
+      padding: 24px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1180px) {
+      .kpis {
+        grid-template-columns: repeat(3, minmax(170px, 1fr));
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-row {
+        grid-template-columns: minmax(180px, 1fr) minmax(240px, 1.2fr);
+      }
+
+      .category-money-grid {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 14px;
+      }
+
+      .topbar,
+      .panel-header,
+      .table-toolbar {
+        display: grid;
+        justify-content: stretch;
+      }
+
+      .actions {
+        justify-content: stretch;
+        min-width: 0;
+      }
+
+      .button,
+      .link-button,
+      .switch {
+        width: 100%;
+        min-height: 44px;
+      }
+
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(1.32rem, 6vw, 1.82rem);
+        line-height: 1.26;
+      }
+
+      .metric {
+        min-height: 118px;
+        padding: 14px 14px 14px 16px;
+      }
+
+      .metric-value {
+        font-size: clamp(1.48rem, 8vw, 2rem);
+      }
+
+      .main-grid {
+        gap: 14px;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+
+      .quarter-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .category-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .category-percent {
+        text-align: left;
+      }
+
+      .category-money-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .status-line {
+        display: grid;
+      }
+
+      .status-pill {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+      }
+
+      .panel-header .badge {
+        justify-self: start;
+      }
+
+      .summary-row {
+        display: grid;
+        gap: 3px;
+      }
+
+      .summary-row strong {
+        text-align: left;
+      }
+
+      .chart {
+        min-height: 230px;
+      }
+
+      .chart-label {
+        font-size: 10px;
+      }
+
+      .chart-value {
+        font-size: 10px;
+      }
+
+      .table-wrap {
+        display: none;
+      }
+
+      .mobile-detail-list {
+        display: grid;
+      }
+    }
+
+    @media (max-width: 380px) {
+      body {
+        font-size: 15px;
+      }
+
+      .page {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.28rem;
+      }
+
+      .detail-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button,
+      .link-button,
+      .switch,
+      .search {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">ระบบติดตามงบประมาณแบบเรียลไทม์</p>
+        <h1 id="dashboard-title">Dashboard แผนเงินบำรุง ปีงบประมาณ 2570</h1>
+        <p class="subtitle">เชื่อมข้อมูลจากชีต Dashboard 2570 อัปเดตโดยตรง</p>
+      </div>
+      <div class="actions" aria-label="คำสั่ง dashboard">
+        <button class="button primary" id="refresh-btn" type="button">รีเฟรชข้อมูล</button>
+        <label class="switch">
+          <input id="auto-refresh" type="checkbox" checked>
+          อัปเดตอัตโนมัติ
+        </label>
+        <a class="link-button" id="sheet-link" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1SNuFUkU4kKB_LgVtaFPmReINln4JkzstMhx2x_vW4VU/edit?gid=1633880760#gid=1633880760">เปิดชีต</a>
+      </div>
+    </header>
+
+    <section class="status-line" aria-live="polite">
+      <span class="status-pill"><span class="dot" id="status-dot"></span><span id="load-state">กำลังโหลดข้อมูลจาก Google Sheets</span></span>
+      <span id="last-updated">ยังไม่มีเวลาปรับปรุงล่าสุด</span>
+    </section>
+
+    <section class="kpis" id="kpi-grid" aria-label="ตัวชี้วัดภาพรวม"></section>
+
+    <section class="main-grid">
+      <article class="card panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">ภาพรวมการใช้จ่ายงบประมาณทั้งหมด</h2>
+            <p class="panel-note">เทียบการใช้จ่ายจริงกับแผนเงินบำรุงทั้งปี</p>
+          </div>
+          <span class="badge" id="overall-badge">0.00%</span>
+        </div>
+        <div class="progress-wrap" id="overall-progress"></div>
+        <div class="summary-stack" id="overall-summary"></div>
+      </article>
+
+      <article class="card panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">สรุปการใช้จ่ายรายไตรมาส</h2>
+            <p class="panel-note">แสดงยอดใช้จ่าย Q1-Q4 พร้อมยอดรวมและเงินคงเหลือ</p>
+          </div>
+          <span class="badge" id="quarter-status">รอข้อมูล</span>
+        </div>
+        <div class="chart" id="quarter-chart"></div>
+      </article>
+    </section>
+
+    <section class="card panel detail-panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title">สัดส่วนงบประมาณและการใช้จ่ายตามหมวดหลัก</h2>
+          <p class="panel-note">ติดตามร้อยละเบิกจ่ายของแต่ละหมวดหลักตามเกณฑ์สีในชีต</p>
+        </div>
+        <span class="badge" id="category-count">0 หมวด</span>
+      </div>
+      <div id="category-list" class="category-list"></div>
+    </section>
+
+    <section class="card panel detail-panel">
+      <div class="table-toolbar">
+        <div>
+          <h2 class="panel-title">รายละเอียดการใช้งบประมาณแยกหมวด</h2>
+          <p class="panel-note">ข้อมูลจากตารางรายละเอียดในชีต Dashboard 2570</p>
+        </div>
+        <input class="search" id="detail-search" type="search" placeholder="ค้นหารายการงบประมาณ" aria-label="ค้นหารายการงบประมาณ">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">รายละเอียดการใช้งบประมาณแยกหมวด</caption>
+          <thead id="detail-head"></thead>
+          <tbody id="detail-body"></tbody>
+        </table>
+      </div>
+      <div class="mobile-detail-list" id="detail-mobile" aria-label="รายละเอียดการใช้งบประมาณแบบมือถือ"></div>
+    </section>
+  </main>
+
+  <script>
+    const CONFIG = {
+      sheetId: "1SNuFUkU4kKB_LgVtaFPmReINln4JkzstMhx2x_vW4VU",
+      gid: "1633880760",
+      refreshMs: 60000
+    };
+
+    const KPI_LABELS = ["งบประมาณทั้งหมด", "ใช้จ่ายแล้ว", "คงเหลือ", "อัตราเบิกจ่าย", "สถานะข้อมูล"];
+    const DETAIL_HEADERS = ["ลำดับ", "รายการ", "แผน 2570", "ไตรมาส 1", "ไตรมาส 2", "ไตรมาส 3", "ไตรมาส 4", "การใช้ทั้งหมด", "คงเหลือ", "ร้อยละ"];
+
+    const FALLBACK_CSV = `Dashboard แผนเงินบำรุง ปีงบประมาณ 2570,,,,,,,,,
+,,,,,,,,,
+งบประมาณทั้งหมด,,ใช้จ่ายแล้ว,,คงเหลือ,,อัตราเบิกจ่าย,,สถานะข้อมูล,
+0.00,,0.00,,0.00,,0.00%,,ยังไม่มีงบ/การใช้จ่าย,
+บาท,,บาท,,บาท,,เป้าหมาย >=75%,,อัปเดตจากสูตร,
+ภาพรวมการใช้จ่ายงบประมาณทั้งหมด,,,,,,,,,
+0.00%,,,,,,,,,
+สรุปการใช้จ่ายรายไตรมาส,,,,,,,,,
+รายการ,ไตรมาส 1,ไตรมาส 2,ไตรมาส 3,ไตรมาส 4,รวมใช้,คงเหลือ,ร้อยละ,สถานะ,
+จำนวนเงิน,0.00,0.00,0.00,0.00,0.00,0.00,0.00%,เร่งรัด/รอข้อมูล,
+สัดส่วนจากแผน,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,คำนวณอัตโนมัติ,
+สัดส่วนงบประมาณและการใช้จ่ายตามหมวดหลัก,,,,,,,,,
+หมวด,แผน,สัดส่วนแผน,ใช้แล้ว,คงเหลือ,ร้อยละ,แถบการใช้จ่าย,,,
+รายจ่ายบุคลากร,0.00,0.00%,0.00,0.00,0.00%,0.00%,,,
+รายจ่ายจากการดำเนินงาน,0.00,0.00%,0.00,0.00,0.00%,0.00%,,,
+รายจ่ายลงทุน,0.00,0.00%,0.00,0.00,0.00%,0.00%,,,
+รายจ่ายสนับสนุน,0.00,0.00%,0.00,0.00,0.00%,0.00%,,,
+งบกลาง,0.00,0.00%,0.00,0.00,0.00%,0.00%,,,
+,,,,,,,,,
+รายละเอียดการใช้งบประมาณแยกหมวด,,,,,,,,,
+ลำดับ,รายการ,แผน 2570,ไตรมาส 1,ไตรมาส 2,ไตรมาส 3,ไตรมาส 4,การใช้ทั้งหมด,คงเหลือ,ร้อยละ
+1,รายจ่ายบุคลากร,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+2,รายจ่ายจากการดำเนินงาน,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2.1ค่าตอบแทน,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2.2 ค่าใช้สอย,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2.3 ค่าวัสดุ,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2.4 ค่าสาธารณูปโภค,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2.5 ค่าใช้จ่ายงบดำเนินงานอื่น,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+3,รายจ่ายลงทุน,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,3.1 ค่าครุภัณฑ์,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,1 ค่าครุภัณฑ์งบค่าเสื่อม,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2 ค่าครุภัณฑ์เงินบริจาค,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,3 ค่าครุภัณฑ์เงินบำรุง,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,3.2 ค่าที่ดินและสิ่งก่อสร้าง,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,1 ค่าครุภัณฑ์งบค่าเสื่อม,,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,2 ค่าครุภัณฑ์เงินบริจาค,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,3 ค่าครุภัณฑ์เงินบำรุง,,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+4,รายจ่ายสนับสนุน,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+5,งบกลาง,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+รวมทั้งหมด,,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00%
+,,,,,,,,,
+เกณฑ์สี,แดง <50%,,เหลือง 50%-74%,,เขียว >=75%,,สูตรเชื่อมกับชีต รายจ่าย (สรุป),,`;
+
+    const els = {
+      title: document.getElementById("dashboard-title"),
+      kpis: document.getElementById("kpi-grid"),
+      statusDot: document.getElementById("status-dot"),
+      loadState: document.getElementById("load-state"),
+      lastUpdated: document.getElementById("last-updated"),
+      refreshBtn: document.getElementById("refresh-btn"),
+      autoRefresh: document.getElementById("auto-refresh"),
+      overallBadge: document.getElementById("overall-badge"),
+      overallProgress: document.getElementById("overall-progress"),
+      overallSummary: document.getElementById("overall-summary"),
+      quarterChart: document.getElementById("quarter-chart"),
+      quarterStatus: document.getElementById("quarter-status"),
+      categoryList: document.getElementById("category-list"),
+      categoryCount: document.getElementById("category-count"),
+      detailHead: document.getElementById("detail-head"),
+      detailBody: document.getElementById("detail-body"),
+      detailMobile: document.getElementById("detail-mobile"),
+      detailSearch: document.getElementById("detail-search")
+    };
+
+    let dashboardData = null;
+    let refreshTimer = null;
+    let countdownTimer = null;
+    let nextRefreshAt = null;
+
+    function csvUrl() {
+      const base = `https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/export?format=csv&gid=${CONFIG.gid}`;
+      return `${base}&cachebust=${Date.now()}`;
+    }
+
+    function gvizUrl(callbackName) {
+      const query = `out:json;responseHandler:${callbackName}`;
+      return `https://docs.google.com/spreadsheets/d/${CONFIG.sheetId}/gviz/tq?tqx=${encodeURIComponent(query)}&gid=${CONFIG.gid}&headers=0&cachebust=${Date.now()}`;
+    }
+
+    function loadJsonpSheet() {
+      return new Promise((resolve, reject) => {
+        const callbackName = `dashboard2570Jsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        const script = document.createElement("script");
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("JSONP timeout"));
+        }, 15000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[callbackName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[callbackName] = (response) => {
+          cleanup();
+          if (!response || response.status !== "ok" || !response.table) {
+            reject(new Error("Google Sheets JSONP ตอบกลับไม่สมบูรณ์"));
+            return;
+          }
+          resolve(gvizTableToRows(response.table));
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("โหลด JSONP จาก Google Sheets ไม่สำเร็จ"));
+        };
+        script.src = gvizUrl(callbackName);
+        document.head.appendChild(script);
+      });
+    }
+
+    function gvizTableToRows(table) {
+      const columnCount = table.cols ? table.cols.length : 0;
+      return (table.rows || []).map((row) => {
+        const cells = row.c || [];
+        const values = [];
+        for (let index = 0; index < columnCount; index += 1) {
+          const entry = cells[index];
+          values.push(entry ? String(entry.f ?? entry.v ?? "").trim() : "");
+        }
+        return values;
+      });
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            cell += '"';
+            i += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(cell.trim());
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(cell.trim());
+          rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
+
+      if (cell.length || row.length) {
+        row.push(cell.trim());
+        rows.push(row);
+      }
+
+      return rows.map((cells) => {
+        let last = cells.length - 1;
+        while (last > 0 && cells[last] === "") last -= 1;
+        return cells.slice(0, last + 1);
+      });
+    }
+
+    function normalizeRows(rows) {
+      return rows.filter((row, index) => index === 0 || row.some((cell) => cell !== ""));
+    }
+
+    function cell(row, index) {
+      return row && row[index] != null ? String(row[index]).trim() : "";
+    }
+
+    function findRow(rows, predicate) {
+      return rows.findIndex((row) => predicate(row));
+    }
+
+    function asNumber(value) {
+      if (value == null) return 0;
+      const cleaned = String(value)
+        .replace(/,/g, "")
+        .replace(/%/g, "")
+        .replace(/บาท/g, "")
+        .replace(/[^\d.-]/g, "");
+      const parsed = Number.parseFloat(cleaned);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function asPercent(value) {
+      if (value == null || value === "") return 0;
+      const text = String(value);
+      const parsed = asNumber(text);
+      if (!text.includes("%") && parsed > 0 && parsed <= 1) return parsed * 100;
+      return parsed;
+    }
+
+    function money(value) {
+      return new Intl.NumberFormat("th-TH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(asNumber(value));
+    }
+
+    function percent(value) {
+      return `${new Intl.NumberFormat("th-TH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(asPercent(value))}%`;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function statusClass(rate) {
+      if (rate >= 75) return "good";
+      if (rate >= 50) return "warn";
+      return "danger";
+    }
+
+    function statusText(rate) {
+      if (rate >= 75) return "ตามเป้าหมาย";
+      if (rate >= 50) return "เฝ้าระวัง";
+      return "เร่งรัด/รอข้อมูล";
+    }
+
+    function metricTone(item) {
+      const label = item.label || "";
+      if (label.includes("ใช้จ่าย")) return "spent";
+      if (label.includes("คงเหลือ")) return "remaining";
+      if (label.includes("อัตรา")) return "rate";
+      if (label.includes("สถานะ")) return "status";
+      return "plan";
+    }
+
+    function metricToken(item) {
+      const tone = metricTone(item);
+      return {
+        plan: "แผน",
+        spent: "ใช้",
+        remaining: "เหลือ",
+        rate: "%",
+        status: "สถานะ"
+      }[tone];
+    }
+
+    function parseDashboard(rows) {
+      const dataRows = normalizeRows(rows);
+      const title = cell(dataRows[0], 0) || "Dashboard แผนเงินบำรุง ปีงบประมาณ 2570";
+      const kpiHeaderIndex = findRow(dataRows, (row) => cell(row, 0).includes("งบประมาณทั้งหมด"));
+      const kpiValueRow = dataRows[kpiHeaderIndex + 1] || [];
+      const kpiNoteRow = dataRows[kpiHeaderIndex + 2] || [];
+      const kpiColumns = [0, 2, 4, 6, 8];
+      const kpis = kpiColumns.map((column, index) => ({
+        label: cell(dataRows[kpiHeaderIndex], column) || KPI_LABELS[index],
+        raw: cell(kpiValueRow, column),
+        note: cell(kpiNoteRow, column) || (index <= 2 ? "บาท" : ""),
+        column
+      })).filter((item) => item.label);
+
+      const rateKpi = kpis.find((item) => item.label.includes("อัตรา"));
+      const statusKpi = kpis.find((item) => item.label.includes("สถานะ"));
+      if (statusKpi && !statusKpi.raw) {
+        statusKpi.raw = statusText(asPercent(rateKpi?.raw));
+        statusKpi.note = statusKpi.note || "คำนวณจากอัตราเบิกจ่าย";
+      }
+
+      const overallLabelIndex = findRow(dataRows, (row) => cell(row, 0).includes("ภาพรวมการใช้จ่ายงบประมาณทั้งหมด"));
+      const overallRate = cell(dataRows[overallLabelIndex + 1], 0) || cell(kpiValueRow, 6);
+      const quarterHeaderIndex = findRow(dataRows, (row) => cell(row, 0) === "รายการ" && cell(row, 1).includes("ไตรมาส"));
+      const quarterHeader = dataRows[quarterHeaderIndex] || [];
+      const quarterAmountRow = dataRows[quarterHeaderIndex + 1] || [];
+      const quarterRatioRow = dataRows[quarterHeaderIndex + 2] || [];
+      const quarterNames = [1, 2, 3, 4].map((index) => cell(quarterHeader, index) || `ไตรมาส ${index}`);
+      const quarters = quarterNames.map((name, offset) => ({
+        label: name,
+        amount: cell(quarterAmountRow, offset + 1),
+        ratio: cell(quarterRatioRow, offset + 1)
+      }));
+      const quarterSummary = {
+        total: cell(quarterAmountRow, 5),
+        remaining: cell(quarterAmountRow, 6),
+        rate: cell(quarterAmountRow, 7),
+        status: cell(quarterAmountRow, 8) || statusText(asPercent(cell(quarterAmountRow, 7)))
+      };
+
+      const categoryHeaderIndex = findRow(dataRows, (row) => cell(row, 0) === "หมวด" && cell(row, 1).includes("แผน"));
+      const categoryRows = [];
+      for (let i = categoryHeaderIndex + 1; i < dataRows.length; i += 1) {
+        const row = dataRows[i];
+        const name = cell(row, 0);
+        if (!name || name.includes("รายละเอียดการใช้งบประมาณ")) break;
+        categoryRows.push({
+          name,
+          plan: cell(row, 1),
+          planShare: cell(row, 2),
+          spent: cell(row, 3),
+          remaining: cell(row, 4),
+          rate: cell(row, 5),
+          bar: cell(row, 6)
+        });
+      }
+
+      const detailHeaderIndex = findRow(dataRows, (row) => cell(row, 0) === "ลำดับ" && cell(row, 1) === "รายการ");
+      const detailHeaderRow = dataRows[detailHeaderIndex] || [];
+      const detailHeaders = DETAIL_HEADERS.map((label, index) => cell(detailHeaderRow, index) || label);
+      const detailRows = [];
+      for (let i = detailHeaderIndex + 1; i < dataRows.length; i += 1) {
+        const row = dataRows[i];
+        if (cell(row, 0) === "เกณฑ์สี") break;
+        if (!row.some((value) => value !== "")) continue;
+        detailRows.push(row);
+      }
+
+      return {
+        title,
+        kpis,
+        overallRate,
+        quarters,
+        quarterSummary,
+        categories: categoryRows,
+        detailHeaders,
+        details: detailRows
+      };
+    }
+
+    function setStatus(kind, text) {
+      els.loadState.textContent = text;
+      els.statusDot.className = "dot";
+      if (kind === "warn") els.statusDot.classList.add("warn");
+      if (kind === "danger") els.statusDot.classList.add("danger");
+    }
+
+    async function loadData() {
+      setStatus("good", "กำลังโหลดข้อมูลจาก Google Sheets");
+      els.refreshBtn.disabled = true;
+      els.refreshBtn.textContent = "กำลังโหลด";
+      let liveSource = "CSV";
+
+      try {
+        try {
+          const response = await fetch(csvUrl(), { cache: "no-store" });
+          if (!response.ok) throw new Error(`Google Sheets ตอบกลับ ${response.status}`);
+          const csv = await response.text();
+          dashboardData = parseDashboard(parseCsv(csv));
+        } catch (fetchError) {
+          liveSource = "JSONP";
+          dashboardData = parseDashboard(await loadJsonpSheet());
+        }
+        renderAll();
+        setStatus("good", `ข้อมูลสดสำเร็จ (${liveSource})`);
+      } catch (error) {
+        dashboardData = parseDashboard(parseCsv(FALLBACK_CSV));
+        renderAll();
+        setStatus("danger", `โหลดข้อมูลสดไม่สำเร็จ ใช้ข้อมูลสำรอง (${error.message})`);
+      } finally {
+        const now = new Date();
+        const date = now.toLocaleDateString("th-TH", { day: "2-digit", month: "2-digit", year: "2-digit" });
+        const time = now.toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit" });
+        els.lastUpdated.textContent = `ล่าสุด ${date} ${time}`;
+        els.refreshBtn.disabled = false;
+        els.refreshBtn.textContent = "รีเฟรชข้อมูล";
+        scheduleRefresh();
+      }
+    }
+
+    function renderAll() {
+      if (!dashboardData) return;
+      els.title.textContent = dashboardData.title;
+      renderKpis(dashboardData.kpis);
+      renderOverall();
+      renderQuarterChart();
+      renderCategories();
+      renderDetailTable();
+    }
+
+    function renderKpis(kpis) {
+      els.kpis.innerHTML = "";
+      kpis.forEach((item) => {
+        const tone = metricTone(item);
+        const value = item.label.includes("อัตรา") ? percent(item.raw) : item.column === 8 ? item.raw || "-" : money(item.raw);
+        const note = item.note || (item.label.includes("สถานะ") ? "อัปเดตจากสูตร" : "บาท");
+        const article = document.createElement("article");
+        article.className = `card metric metric-${tone}`;
+        article.innerHTML = `
+          <div class="metric-top">
+            <p class="metric-label">${escapeHtml(item.label)}</p>
+            <span class="metric-token">${escapeHtml(metricToken(item))}</span>
+          </div>
+          <p class="metric-value">${escapeHtml(value)}</p>
+          <p class="metric-note">${escapeHtml(note)}</p>
+        `;
+        els.kpis.appendChild(article);
+      });
+    }
+
+    function renderOverall() {
+      const data = dashboardData;
+      const rate = asPercent(data.overallRate);
+      const cls = statusClass(rate);
+      const sweep = clamp(rate, 0, 100);
+      const circumference = 2 * Math.PI * 44;
+      const dash = (sweep / 100) * circumference;
+      const color = cls === "good" ? "var(--good)" : cls === "warn" ? "var(--warn)" : "var(--danger)";
+
+      els.overallBadge.textContent = percent(rate);
+      els.overallBadge.className = `badge ${cls === "good" ? "" : cls}`;
+      els.overallProgress.innerHTML = `
+        <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="อัตราเบิกจ่ายรวม ${percent(rate)}">
+          <circle cx="60" cy="60" r="44" fill="none" stroke="var(--line-soft)" stroke-width="14"></circle>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round"
+            stroke-dasharray="${dash} ${circumference - dash}" transform="rotate(-90 60 60)"></circle>
+          <text class="label" x="60" y="49">เบิกจ่ายแล้ว</text>
+          <text class="value" x="60" y="67">${percent(rate)}</text>
+        </svg>
+      `;
+
+      const total = data.kpis.find((item) => item.label.includes("งบประมาณทั้งหมด"));
+      const spent = data.kpis.find((item) => item.label.includes("ใช้จ่ายแล้ว"));
+      const remaining = data.kpis.find((item) => item.label.includes("คงเหลือ"));
+      els.overallSummary.innerHTML = `
+        <div class="summary-row"><span>งบประมาณทั้งหมด</span><strong>${money(total?.raw)}</strong></div>
+        <div class="summary-row"><span>ใช้จ่ายแล้ว</span><strong>${money(spent?.raw)}</strong></div>
+        <div class="summary-row"><span>คงเหลือ</span><strong>${money(remaining?.raw)}</strong></div>
+      `;
+    }
+
+    function renderQuarterChart() {
+      const quarters = dashboardData.quarters;
+      const values = quarters.map((item) => asNumber(item.amount));
+      const max = Math.max(...values, 0);
+      const statusRate = asPercent(dashboardData.quarterSummary.rate);
+      const statusKind = statusClass(statusRate);
+      const quarterColors = ["var(--accent)", "var(--primary)", "var(--violet)", "var(--rose)"];
+      els.quarterStatus.textContent = dashboardData.quarterSummary.status || statusText(statusRate);
+      els.quarterStatus.className = `badge ${statusKind === "good" ? "" : statusKind}`;
+
+      if (max <= 0) {
+        els.quarterChart.innerHTML = `<div class="empty-state">ยังไม่มีข้อมูลการใช้จ่ายรายไตรมาสในชีต</div>`;
+        return;
+      }
+
+      const width = 720;
+      const height = 310;
+      const pad = { top: 24, right: 30, bottom: 64, left: 64 };
+      const plotW = width - pad.left - pad.right;
+      const plotH = height - pad.top - pad.bottom;
+      const barW = plotW / quarters.length * 0.52;
+      const grid = [0, 0.25, 0.5, 0.75, 1];
+      const bars = quarters.map((item, index) => {
+        const x = pad.left + (plotW / quarters.length) * index + (plotW / quarters.length - barW) / 2;
+        const h = (asNumber(item.amount) / max) * plotH;
+        const y = pad.top + plotH - h;
+        return { item, x, y, h };
+      });
+
+      els.quarterChart.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="กราฟแท่งสรุปการใช้จ่ายรายไตรมาส">
+          ${grid.map((tick) => {
+            const y = pad.top + plotH - tick * plotH;
+            const label = money(max * tick);
+            return `<line class="grid-line" x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}"></line>
+              <text class="chart-label" x="${pad.left - 10}" y="${y + 4}" text-anchor="end">${label}</text>`;
+          }).join("")}
+          <line class="axis" x1="${pad.left}" y1="${pad.top + plotH}" x2="${width - pad.right}" y2="${pad.top + plotH}"></line>
+          ${bars.map(({ item, x, y, h }, index) => `
+            <rect x="${x}" y="${y}" width="${barW}" height="${h}" rx="8" fill="${quarterColors[index]}"></rect>
+            <text class="chart-value" x="${x + barW / 2}" y="${Math.max(y - 8, 16)}" text-anchor="middle">${money(item.amount)}</text>
+            <text class="chart-label" x="${x + barW / 2}" y="${height - 34}" text-anchor="middle">${escapeHtml(item.label)}</text>
+            <text class="chart-label" x="${x + barW / 2}" y="${height - 16}" text-anchor="middle">${percent(item.ratio)}</text>
+          `).join("")}
+        </svg>
+        <div class="quarter-summary">
+          <div class="quarter-mini"><span>รวมใช้</span><strong>${money(dashboardData.quarterSummary.total)}</strong></div>
+          <div class="quarter-mini"><span>คงเหลือ</span><strong>${money(dashboardData.quarterSummary.remaining)}</strong></div>
+          <div class="quarter-mini"><span>ร้อยละรวม</span><strong>${percent(dashboardData.quarterSummary.rate)}</strong></div>
+        </div>
+      `;
+    }
+
+    function renderCategories() {
+      const categories = dashboardData.categories;
+      els.categoryCount.textContent = `${categories.length} หมวด`;
+
+      if (!categories.length) {
+        els.categoryList.innerHTML = `<div class="empty-state">ยังไม่พบข้อมูลหมวดหลักในชีต</div>`;
+        return;
+      }
+
+      els.categoryList.innerHTML = categories.map((item) => {
+        const rate = asPercent(item.rate || item.bar);
+        const width = clamp(rate, 0, 100);
+        const cls = statusClass(rate);
+        return `
+          <div class="category-row ${cls}">
+            <div class="category-name">
+              ${escapeHtml(item.name)}
+              <div class="category-status">${escapeHtml(statusText(rate))}</div>
+            </div>
+            <div>
+              <div class="bar-track" aria-hidden="true">
+                <div class="bar-fill ${cls === "good" ? "" : cls}" style="width: ${width}%"></div>
+              </div>
+              <div class="category-meta">สัดส่วนแผน ${percent(item.planShare)}</div>
+            </div>
+            <div class="category-percent"><span>เบิกจ่าย</span>${percent(rate)}</div>
+            <div class="category-money-grid">
+              <div class="category-money"><span>แผน</span><strong>${money(item.plan)}</strong></div>
+              <div class="category-money"><span>ใช้แล้ว</span><strong>${money(item.spent)}</strong></div>
+              <div class="category-money"><span>คงเหลือ</span><strong>${money(item.remaining)}</strong></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderDetailTable() {
+      const query = els.detailSearch.value.trim().toLowerCase();
+      const headers = dashboardData.detailHeaders.slice(0, 10);
+      const rows = dashboardData.details.filter((row) => row.join(" ").toLowerCase().includes(query));
+
+      els.detailHead.innerHTML = `<tr>${headers.map((header, index) => `<th class="${index >= 2 ? "num" : ""}" scope="col">${escapeHtml(header)}</th>`).join("")}</tr>`;
+      els.detailBody.innerHTML = rows.map((row) => {
+        const isSubitem = !cell(row, 0);
+        const isTotal = cell(row, 0).includes("รวมทั้งหมด") || cell(row, 1).includes("รวมทั้งหมด");
+        const cells = headers.map((_, index) => {
+          const value = cell(row, index);
+          const isNumeric = index >= 2;
+          const display = isNumeric && value ? (index === 9 ? percent(value) : money(value)) : value;
+          const cls = `${isNumeric ? "num" : ""} ${index === 1 ? "item-cell" : ""}`.trim();
+          return `<td class="${cls}">${escapeHtml(display)}</td>`;
+        }).join("");
+        return `<tr class="${isSubitem ? "subitem" : ""} ${isTotal ? "total-row" : ""}">${cells}</tr>`;
+      }).join("");
+
+      if (!rows.length) {
+        els.detailBody.innerHTML = `<tr><td colspan="${headers.length}" class="item-cell">ไม่พบรายการที่ตรงกับคำค้น</td></tr>`;
+        els.detailMobile.innerHTML = `<div class="empty-state">ไม่พบรายการที่ตรงกับคำค้น</div>`;
+        return;
+      }
+
+      els.detailMobile.innerHTML = rows.map((row) => {
+        const isSubitem = !cell(row, 0);
+        const isTotal = cell(row, 0).includes("รวมทั้งหมด") || cell(row, 1).includes("รวมทั้งหมด");
+        const itemName = cell(row, 1) || cell(row, 0) || "ไม่ระบุรายการ";
+        const indexLabel = cell(row, 0) || (isSubitem ? "ย่อย" : "");
+        const fields = headers.slice(2, 10).map((header, offset) => {
+          const index = offset + 2;
+          const value = cell(row, index);
+          const display = value ? (index === 9 ? percent(value) : money(value)) : "-";
+          return `
+            <div class="detail-card-field">
+              <span>${escapeHtml(header)}</span>
+              <strong>${escapeHtml(display)}</strong>
+            </div>
+          `;
+        }).join("");
+        return `
+          <article class="detail-card ${isSubitem ? "subitem" : ""} ${isTotal ? "total-row" : ""}">
+            <div class="detail-card-title">
+              <span>${escapeHtml(itemName)}</span>
+              <span class="detail-card-index">${escapeHtml(indexLabel)}</span>
+            </div>
+            <div class="detail-card-grid">${fields}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function scheduleRefresh() {
+      clearTimeout(refreshTimer);
+      clearInterval(countdownTimer);
+      if (!els.autoRefresh.checked) return;
+
+      nextRefreshAt = Date.now() + CONFIG.refreshMs;
+      refreshTimer = setTimeout(loadData, CONFIG.refreshMs);
+      countdownTimer = setInterval(() => {
+        if (!nextRefreshAt) return;
+        const seconds = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
+        const lastText = els.lastUpdated.textContent.split(" · ")[0];
+        els.lastUpdated.textContent = `${lastText} · อีก ${seconds} วิ`;
+      }, 1000);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    els.refreshBtn.addEventListener("click", loadData);
+    els.autoRefresh.addEventListener("change", scheduleRefresh);
+    els.detailSearch.addEventListener("input", renderDetailTable);
+    loadData();
+  </script>
+</body>
+</html>
